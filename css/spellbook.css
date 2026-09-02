@@ -80,8 +80,16 @@ a:hover {
 
 .watcher-slot {
   width: 92px;
-  height: 92px;
+  min-height: 92px;
   margin: 0 auto 6px;
+  display: flex;
+  justify-content: center;
+}
+
+.watcher-cluster {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .watcher-cluster.is-sticky {
@@ -111,12 +119,9 @@ a:hover {
 }
 
 .watcher-toggle {
-  position: fixed;
-  top: 104px;
-  left: 50%;
+  position: relative;
   z-index: 61;
-  transform: translateX(-50%);
-  margin: 0;
+  margin: 4px 0 0;
   padding: 2px 8px;
   border: 1px solid #3a2c1c;
   border-radius: 999px;
@@ -129,6 +134,7 @@ a:hover {
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
+  white-space: nowrap;
   transition: opacity 0.35s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
@@ -150,10 +156,6 @@ a:hover {
     opacity: 1;
     pointer-events: auto;
   }
-}
-
-body:not(.eye-sticky) .watcher-toggle {
-  top: 12px;
 }
 
 body.eye-sticky .rail {
@@ -1058,6 +1060,11 @@ hr.ornament {
 
 .muted {
   color: var(--muted);
+}
+
+.ad-band,
+.ad-slot--rail {
+  display: none;
 }
 
 .ad-band {
