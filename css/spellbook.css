@@ -79,7 +79,8 @@ a:hover {
 }
 
 .watcher-slot {
-  width: 92px;
+  width: auto;
+  min-width: 92px;
   min-height: 92px;
   margin: 0 auto 6px;
   display: flex;
@@ -98,6 +99,13 @@ a:hover {
   left: 50%;
   z-index: 60;
   transform: translateX(-50%);
+}
+
+body:not(.eye-sticky) .watcher-cluster {
+  position: static;
+  top: auto;
+  left: auto;
+  transform: none;
 }
 
 .watcher {
@@ -119,10 +127,12 @@ a:hover {
 }
 
 .watcher-toggle {
+  appearance: none;
+  -webkit-appearance: none;
   position: relative;
   z-index: 61;
-  margin: 4px 0 0;
-  padding: 2px 8px;
+  margin: 6px 0 0;
+  padding: 5px 16px;
   border: 1px solid #3a2c1c;
   border-radius: 999px;
   background: rgba(15, 12, 10, 0.88);
@@ -130,11 +140,16 @@ a:hover {
   font-family: var(--sans);
   font-size: 0.68rem;
   letter-spacing: 0.08em;
+  line-height: 1.2;
   text-transform: uppercase;
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
   white-space: nowrap;
+  width: max-content;
+  min-width: 7.5rem;
+  height: auto;
+  flex-shrink: 0;
   transition: opacity 0.35s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
@@ -1119,6 +1134,11 @@ hr.ornament {
 }
 
 @media (max-width: 860px) {
+  body.is-scrolled .watcher-toggle {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
   .layout {
     grid-template-columns: 1fr;
   }

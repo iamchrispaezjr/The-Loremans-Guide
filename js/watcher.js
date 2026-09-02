@@ -70,6 +70,13 @@
   window.addEventListener("scroll", scheduleLook, { passive: true });
   window.addEventListener("resize", scheduleLook);
 
+  function updateScrolled() {
+    document.body.classList.toggle("is-scrolled", window.scrollY > 24);
+  }
+
+  window.addEventListener("scroll", updateScrolled, { passive: true });
+  updateScrolled();
+
   function blink() {
     watcher.classList.remove("is-blinking");
     void watcher.offsetWidth;
