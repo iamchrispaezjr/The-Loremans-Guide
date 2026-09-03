@@ -7,6 +7,22 @@
   const foundationList = document.getElementById("foundation-list");
 
   const byId = Object.fromEntries(spells.map((spell) => [spell.id, spell]));
+  const SITE_URL = "https://theloreman.com";
+  const DEFAULT_DESCRIPTION =
+    "The Loreman's Spellbook is a grimoire of spoken workings from tier 1 to 100. Browse Fire, Earth, Air, and Water — the four primordial elemental spells.";
+  const DEFAULT_JSON_LD = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: wikiName,
+    url: `${SITE_URL}/`,
+    description: DEFAULT_DESCRIPTION,
+    inLanguage: "en",
+    author: {
+      "@type": "Person",
+      name: "Cristian Paez Jr",
+      url: "https://www.iamchrispaezjr.com",
+    },
+  };
 
   function slug(value) {
     return String(value).toLowerCase().replace(/\s+/g, "-");
@@ -22,6 +38,39 @@
 
   function unique(values) {
     return [...new Set(values)];
+  }
+
+  function clipMeta(text, max = 158) {
+    const clean = String(text).replace(/\s+/g, " ").trim();
+    if (clean.length <= max) return clean;
+    return `${clean.slice(0, max - 1).replace(/\s+\S*$/, "")}…`;
+  }
+
+  function setMeta(name, content, attr = "name") {
+    let el = document.querySelector(`meta[${attr}="${name}"]`);
+    if (!el) {
+      el = document.createElement("meta");
+      el.setAttribute(attr, name);
+      document.head.appendChild(el);
+    }
+    el.setAttribute("content", content);
+  }
+
+  function setSeo({ title, description, path, type = "website", jsonLd = DEFAULT_JSON_LD }) {
+    const url = `${SITE_URL}/${path || ""}`.replace(/([^:]\/)\/+/g, "$1");
+    const desc = clipMeta(description || DEFAULT_DESCRIPTION);
+    document.title = title;
+    setMeta("description", desc);
+    setMeta("og:title", title, "property");
+    setMeta("og:description", desc, "property");
+    setMeta("og:url", url, "property");
+    setMeta("og:type", type, "property");
+    setMeta("twitter:title", title);
+    setMeta("twitter:description", desc);
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute("href", url);
+    const structured = document.getElementById("structured-data");
+    if (structured) structured.textContent = JSON.stringify(jsonLd);
   }
 
   function allCategories() {
@@ -114,7 +163,11 @@
 
   function homeView() {
     setActiveNav("home");
-    document.title = wikiName;
+    setSeo({
+      title: wikiName,
+      description: DEFAULT_DESCRIPTION,
+      path: "",
+    });
     page.innerHTML = `
       <h1 class="article-title">Main Page</h1>
       <p class="article-subtitle">Welcome to the Loreman's Spellbook, a record of spoken workings.</p>
@@ -137,7 +190,11 @@
 
   function spellsView() {
     setActiveNav("spells");
-    document.title = `Spells — ${wikiName}`;
+    setSeo({
+      title: `Spells — ${wikiName}`,
+      description: `Browse ${spells.length} recorded workings in The Loreman's Spellbook, from tier 1 through ${maxTier}. Fire, Earth, Air, and Water are cataloged so far.`,
+      path: "#/spells",
+    });
     page.innerHTML = `
       <h1 class="article-title">Spells</h1>
       <p class="article-subtitle">${spells.length} recorded working${spells.length === 1 ? "" : "s"} across tiers 1–${maxTier}.</p>
@@ -172,11 +229,29 @@
   function spellView(id) {
     const spell = byId[id];
     if (!spell) {
+      setSeo({
+        title: `Missing page — ${wikiName}`,
+        description: DEFAULT_DESCRIPTION,
+        path: `#/spell/${id}`,
+      });
       page.innerHTML = `<h1 class="article-title">Missing page</h1><p>No spell is recorded under that name. Return to the <a href="#/spells">spell index</a>.</p>`;
       return;
     }
     setActiveNav("spells");
-    document.title = `${spell.name} — ${wikiName}`;
+    setSeo({
+      title: `${spell.name} — ${wikiName}`,
+      description: spell.description,
+      path: `#/spell/${spell.id}`,
+      type: "article",
+      jsonLd: {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: `${spell.name} (${spell.incantation})`,
+        description: clipMeta(spell.description),
+        url: `${SITE_URL}/#/spell/${spell.id}`,
+        isPartOf: { "@type": "WebSite", name: wikiName, url: `${SITE_URL}/` },
+      },
+    });
     page.innerHTML = `
       ${infobox(spell)}
       <nav class="toc" aria-label="Contents">
@@ -221,7 +296,11 @@
 
   function tiersView() {
     setActiveNav("tiers");
-    document.title = `Tiers — ${wikiName}`;
+    setSeo({
+      title: `Tiers — ${wikiName}`,
+      description: `Spell tiers from level 1 to ${maxTier} in The Loreman's Spellbook. Tier 1 holds the four primordial elemental workings.`,
+      path: "#/tiers",
+    });
     const filled = new Set(spells.map((spell) => spell.tier));
     const cells = Array.from({ length: maxTier }, (_, index) => {
       const tier = index + 1;
@@ -238,11 +317,20 @@
 
   function tierView(tier) {
     if (!Number.isInteger(tier) || tier < 1 || tier > maxTier) {
+      setSeo({
+        title: `Unknown tier — ${wikiName}`,
+        description: DEFAULT_DESCRIPTION,
+        path: `#/tier/${tier}`,
+      });
       page.innerHTML = `<h1 class="article-title">Unknown tier</h1><p>Tiers run from 1 to ${maxTier}. See the <a href="#/tiers">tier index</a>.</p>`;
       return;
     }
     setActiveNav("tiers");
-    document.title = `Tier ${tier} — ${wikiName}`;
+    setSeo({
+      title: `Tier ${tier} — ${wikiName}`,
+      description: `Spells recorded at tier ${tier} of ${maxTier} in The Loreman's Spellbook.`,
+      path: `#/tier/${tier}`,
+    });
     const found = spellsInTier(tier);
     page.innerHTML = `
       <h1 class="article-title">Tier ${tier}</h1>
@@ -259,7 +347,11 @@
 
   function categoriesView() {
     setActiveNav("categories");
-    document.title = `Categories — ${wikiName}`;
+    setSeo({
+      title: `Categories — ${wikiName}`,
+      description: "Browse spells by category in The Loreman's Spellbook, including Elemental, Primordial, Offensive, Defensive, Utility, and Support.",
+      path: "#/categories",
+    });
     const cats = allCategories();
     page.innerHTML = `
       <h1 class="article-title">Categories</h1>
@@ -285,10 +377,19 @@
     setActiveNav("categories");
     const match = allCategories().find((category) => slug(category) === id);
     if (!match) {
+      setSeo({
+        title: `Unknown category — ${wikiName}`,
+        description: DEFAULT_DESCRIPTION,
+        path: `#/category/${id}`,
+      });
       page.innerHTML = `<h1 class="article-title">Unknown category</h1><p>See the <a href="#/categories">category index</a>.</p>`;
       return;
     }
-    document.title = `Category:${match} — ${wikiName}`;
+    setSeo({
+      title: `Category:${match} — ${wikiName}`,
+      description: `Spells in the ${match} category of The Loreman's Spellbook.`,
+      path: `#/category/${id}`,
+    });
     const found = spellsInCategory(match);
     page.innerHTML = `
       <h1 class="article-title">Category: ${escapeHtml(match)}</h1>
@@ -357,6 +458,14 @@
     .join("");
 
   bindSearch();
-  window.addEventListener("hashchange", render);
+  window.addEventListener("hashchange", () => {
+    render();
+    if (typeof gtag === "function") {
+      gtag("event", "page_view", {
+        page_title: document.title,
+        page_location: location.href,
+      });
+    }
+  });
   render();
 })();
