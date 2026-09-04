@@ -1133,6 +1133,47 @@ hr.ornament {
   margin: 0 auto 16px;
 }
 
+.footer-legal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 10px;
+  flex-wrap: wrap;
+}
+
+.footer-legal a {
+  color: #d4c4a4;
+  text-decoration: none;
+}
+
+.footer-legal a:hover {
+  color: var(--gold-bright);
+}
+
+.legal {
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  max-width: 42rem;
+}
+
+.legal h2 {
+  margin: 1.4em 0 0.45em;
+  font-family: var(--display);
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+}
+
+.legal p,
+.legal ul {
+  margin: 0 0 0.85em;
+}
+
+.legal ul {
+  padding-left: 1.2em;
+}
+
 @media (max-width: 860px) {
   body.is-scrolled .watcher-toggle {
     opacity: 0 !important;

@@ -98,6 +98,8 @@
     if (parts[0] === "tier" && parts[1]) return { name: "tier", id: Number(parts[1]) };
     if (parts[0] === "categories") return { name: "categories" };
     if (parts[0] === "category" && parts[1]) return { name: "category", id: parts[1] };
+    if (parts[0] === "privacy") return { name: "privacy" };
+    if (parts[0] === "terms") return { name: "terms" };
     return { name: "home" };
   }
 
@@ -398,6 +400,103 @@
     `;
   }
 
+  function privacyView() {
+    setActiveNav("");
+    setSeo({
+      title: `Privacy Policy — ${wikiName}`,
+      description: "How The Loreman's Spellbook handles donations, advertising, analytics, and other information collected on theloreman.com.",
+      path: "#/privacy",
+    });
+    page.innerHTML = `
+      <h1 class="article-title">Privacy Policy</h1>
+      <p class="article-subtitle">Effective September 4, 2026</p>
+      <div class="legal">
+        <p>The Loreman's Spellbook (“the site,” “we,” “us”) is operated by Cristian Paez Jr and owned by Cristian Paez Jr &amp; Co. It is published at <a href="https://theloreman.com/">theloreman.com</a>. This policy explains what information is collected when you visit, donate, or see ads on the site.</p>
+
+        <h2>What this site does</h2>
+        <p>The site is a public grimoire of fictional spell lore. It currently displays third-party advertisements and accepts voluntary donations. It also uses analytics to understand how the site is used.</p>
+
+        <h2>Information we collect</h2>
+        <ul>
+          <li><strong>Usage data.</strong> Google Analytics (measurement ID G-6ZY7LZ5NB1) records things such as pages viewed, approximate location, device and browser type, and referral source.</li>
+          <li><strong>Advertising data.</strong> Google AdSense (publisher ID pub-7643949929679794) displays ads and may collect or receive cookie and device identifiers, IP address, and browsing data to show and measure ads, including personalized ads where allowed.</li>
+          <li><strong>Donation data.</strong> If you donate, the payment is processed by PayPal. We do not collect or store your full payment card number on this site. PayPal may share with us your name, email address, and donation amount so we can acknowledge the gift.</li>
+          <li><strong>Local site preferences.</strong> The site may store simple settings in your browser (for example, whether the watching eye stays pinned) using local storage. That data stays on your device.</li>
+        </ul>
+
+        <h2>Donations</h2>
+        <p>Donations are optional. They are processed by PayPal according to <a href="https://www.paypal.com/us/legalhub/privacy-full" target="_blank" rel="noopener noreferrer">PayPal’s Privacy Statement</a>. We use donation information only to receive the gift, send thanks if appropriate, and keep ordinary records. Donations are not required to use the spellbook.</p>
+
+        <h2>Advertising</h2>
+        <p>The site currently displays ads served by Google AdSense. Google and its partners may use cookies or similar technologies to serve ads based on your visits to this site and other sites. You can learn how Google uses information from partner sites in <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">Google’s partner sites policy</a>, and you can opt out of personalized ads at <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.</p>
+
+        <h2>How we use information</h2>
+        <p>We use the information above to run and improve the site, show ads, accept donations, measure traffic, keep the site secure, and comply with the law. We do not sell your personal information.</p>
+
+        <h2>Sharing</h2>
+        <p>We share information with service providers who help operate the site, including Google (analytics and ads) and PayPal (donations). Those companies handle data under their own policies. We may also disclose information if required by law or to protect the site and its visitors.</p>
+
+        <h2>Cookies</h2>
+        <p>Cookies and similar technologies may be set by this site, Google Analytics, and Google AdSense. You can block or delete cookies in your browser. Blocking them may affect ads, analytics, or saved preferences.</p>
+
+        <h2>Children</h2>
+        <p>The site is not directed at children under 13, and we do not knowingly collect personal information from children under 13.</p>
+
+        <h2>Your choices</h2>
+        <p>You can refuse cookies, use analytics or ads opt-outs offered by Google, and choose not to donate. Because this is a static site, we do not provide an account dashboard. For a privacy question, contact Cristian Paez Jr or Cristian Paez Jr &amp; Co. through <a href="https://www.iamchrispaezjr.com">iamchrispaezjr.com</a>.</p>
+
+        <h2>Changes</h2>
+        <p>We may update this policy as the site, ads, or donation setup changes. The effective date at the top will be revised when we do.</p>
+      </div>
+    `;
+  }
+
+  function termsView() {
+    setActiveNav("");
+    setSeo({
+      title: `Terms of Service — ${wikiName}`,
+      description: "Terms for using The Loreman's Spellbook, including voluntary donations and advertising displayed on theloreman.com.",
+      path: "#/terms",
+    });
+    page.innerHTML = `
+      <h1 class="article-title">Terms of Service</h1>
+      <p class="article-subtitle">Effective September 4, 2026</p>
+      <div class="legal">
+        <p>These terms govern your use of The Loreman's Spellbook at <a href="https://theloreman.com/">theloreman.com</a>. The site is operated by Cristian Paez Jr and owned by Cristian Paez Jr &amp; Co. By using the site, you agree to these terms and to the <a href="#/privacy">Privacy Policy</a>.</p>
+
+        <h2>The site</h2>
+        <p>The Loreman's Spellbook is a work of fiction and creative reference. Spell entries, incantations, and related lore are for entertainment and world-building. They are not real-world instructions, medical advice, or any promise of results.</p>
+
+        <h2>Donations</h2>
+        <p>The site collects voluntary donations through PayPal. A donation is a gift. It does not buy merchandise, membership, extra features, or any ownership interest in the site, and it does not create a contract for future work unless we agree to that separately in writing. We do not represent that donations are tax-deductible. PayPal’s own terms apply to the payment itself.</p>
+
+        <h2>Advertising</h2>
+        <p>The site currently displays advertisements, including ads served by Google AdSense. Ads are provided by third parties. We do not control every advertiser’s content, and a listing or ad is not an endorsement. Clicking an ad may take you to another site with its own terms and privacy practices.</p>
+
+        <h2>Intellectual property</h2>
+        <p>Unless noted otherwise, the site’s original text, design, and arrangement are owned by Cristian Paez Jr &amp; Co. You may browse and share links to public pages. You may not copy the site wholesale, scrape it for a competing product, or present the material as your own without permission.</p>
+
+        <h2>Acceptable use</h2>
+        <p>Do not misuse the site, attempt to break it, interfere with ads or donations, or use it for unlawful purposes. We may change, suspend, or stop offering any part of the site at any time.</p>
+
+        <h2>No warranty</h2>
+        <p>The site is provided “as is.” We do not warrant that it will be uninterrupted, error-free, or that ads, donation checkout, or third-party services will always work. Fictional spell material is offered for reading, not as a guarantee of any kind.</p>
+
+        <h2>Limitation of liability</h2>
+        <p>To the fullest extent allowed by law, Cristian Paez Jr, Cristian Paez Jr &amp; Co., and The Loreman's Spellbook are not liable for indirect, incidental, or consequential damages arising from your use of the site, ads, or donations. Our total liability for any claim related to the site is limited to the amount you donated to us in the twelve months before the claim, if any.</p>
+
+        <h2>Third-party services</h2>
+        <p>PayPal, Google, and linked social or personal sites are independent services. Your use of those services is between you and those providers.</p>
+
+        <h2>Changes</h2>
+        <p>We may update these terms as donations, advertising, or the site itself change. Continued use after an update means you accept the revised terms. The effective date at the top will be revised when we do.</p>
+
+        <h2>Contact</h2>
+        <p>Questions about these terms can be sent through <a href="https://www.iamchrispaezjr.com">iamchrispaezjr.com</a>.</p>
+      </div>
+    `;
+  }
+
   function render() {
     const route = parseRoute();
     window.scrollTo(0, 0);
@@ -408,6 +507,8 @@
     if (route.name === "tier") return tierView(route.id);
     if (route.name === "categories") return categoriesView();
     if (route.name === "category") return categoryView(route.id);
+    if (route.name === "privacy") return privacyView();
+    if (route.name === "terms") return termsView();
     homeView();
   }
 
