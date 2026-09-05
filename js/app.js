@@ -100,6 +100,8 @@
     if (parts[0] === "category" && parts[1]) return { name: "category", id: parts[1] };
     if (parts[0] === "privacy") return { name: "privacy" };
     if (parts[0] === "terms") return { name: "terms" };
+    if (parts[0] === "about") return { name: "about" };
+    if (parts[0] === "contact") return { name: "contact" };
     return { name: "home" };
   }
 
@@ -497,6 +499,46 @@
     `;
   }
 
+  function aboutView() {
+    setActiveNav("");
+    setSeo({
+      title: `About Us — ${wikiName}`,
+      description: "The Loreman's Spellbook is a public grimoire of spoken workings from tier 1 to 100, run by Cristian Paez Jr and owned by Cristian Paez Jr & Co.",
+      path: "#/about",
+    });
+    page.innerHTML = `
+      <h1 class="article-title">About Us</h1>
+      <p class="article-subtitle">A public grimoire of the spoken arts.</p>
+      <div class="legal">
+        <h2>What this site is</h2>
+        <p>The Loreman's Spellbook is a catalog of fictional spells, kept as a wiki. It records workings from <strong>tier 1 through tier 100</strong>. Each page is meant to hold an incantation, categories, listed effects, and a short account of the spell.</p>
+        <p>The book begins with the four primordial elements — Fire, Earth, Air, and Water — and leaves the later tiers ready to be written.</p>
+
+        <h2>Who keeps it</h2>
+        <p>The site is run by Cristian Paez Jr and owned by Cristian Paez Jr &amp; Co.</p>
+        <p>For more about the person behind the book, see <a href="https://www.iamchrispaezjr.com/about/" target="_blank" rel="noopener noreferrer">About Us on iamchrispaezjr.com</a>.</p>
+      </div>
+    `;
+  }
+
+  function contactView() {
+    setActiveNav("");
+    setSeo({
+      title: `Contact Us — ${wikiName}`,
+      description: "For business and/or general inquiries, or just saying hello — reach Cristian Paez Jr through iamchrispaezjr.com.",
+      path: "#/contact",
+    });
+    page.innerHTML = `
+      <h1 class="article-title">Contact Us</h1>
+      <p class="article-subtitle">For business and/or general inquiries, or just saying hello — drop a message there.</p>
+      <div class="legal">
+        <p>This spellbook doesn’t keep its own inbox. Write through the official contact page, and it’ll reach Cristian Paez Jr and Cristian Paez Jr &amp; Co.</p>
+        <p><a class="legal-action" href="https://www.iamchrispaezjr.com/contact/" target="_blank" rel="noopener noreferrer">Contact Me on iamchrispaezjr.com</a></p>
+        <p>Or email <a href="mailto:contactme@iamchrispaezjr.com">contactme@iamchrispaezjr.com</a>.</p>
+      </div>
+    `;
+  }
+
   function render() {
     const route = parseRoute();
     window.scrollTo(0, 0);
@@ -509,6 +551,8 @@
     if (route.name === "category") return categoryView(route.id);
     if (route.name === "privacy") return privacyView();
     if (route.name === "terms") return termsView();
+    if (route.name === "about") return aboutView();
+    if (route.name === "contact") return contactView();
     homeView();
   }
 

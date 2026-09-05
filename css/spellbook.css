@@ -1174,6 +1174,26 @@ hr.ornament {
   padding-left: 1.2em;
 }
 
+.legal-action {
+  display: inline-block;
+  margin: 0.15rem 0 0.35rem;
+  padding: 0.45rem 1.1rem;
+  border: 1px solid #3a2c1c;
+  border-radius: 999px;
+  background: #1a120c;
+  color: #f6efe2;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.legal-action:hover {
+  color: var(--gold-bright);
+  border-color: var(--gold);
+}
+
 @media (max-width: 860px) {
   body.is-scrolled .watcher-toggle {
     opacity: 0 !important;
